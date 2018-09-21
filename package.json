@@ -53,8 +53,5 @@
   "dependencies": {
     "@babel/plugin-transform-regenerator": "7.0.0",
     "@babel/runtime": "7.0.0"
-  },
-  "browser": {
-    "buffer": false
   }
 }

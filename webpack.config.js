@@ -33,7 +33,7 @@ const getBabelWebOpt = () => {
 const webConfig = {
   target: 'web',
   entry: {
-    jsbu: ['./src/index.js'],
+    jseu: ['./src/index.js'],
     // test: ['./test/api.hkdf.spec.mjs']
   },
   output: {

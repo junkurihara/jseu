@@ -1,8 +1,8 @@
 {
-  "name": "js-buffer-utils",
-  "version": "0.1.0",
-  "description": "Miscellaneous Buffer Utilities for Crypto-related Objects in JavaScript",
-  "main": "dist/jsbu.bundle.js",
+  "name": "js-encoding-utils",
+  "version": "0.0.1",
+  "description": "Miscellaneous Encoding Utilities for Crypto-related Objects in JavaScript",
+  "main": "dist/jseu.bundle.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --require @babel/register --recursive $(find test -name '*.spec.js')",
     "karma": "./node_modules/.bin/karma start",

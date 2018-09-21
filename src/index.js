@@ -3,7 +3,7 @@
  **/
 
 import * as encoder from './encoder.js';
-import * as formatter from './pembin.js';
+import * as formatter from './formatter.js';
 
 
 export default {encoder, formatter};

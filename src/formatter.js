@@ -1,5 +1,5 @@
 /**
- * pembin.js
+ * formatter.js
  */
 
 import * as env from './env.js';

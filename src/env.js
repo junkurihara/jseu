@@ -3,12 +3,12 @@
  * env.js
  */
 
-export async function getEnvBtoa(){
+export function getEnvBtoa(){
   if(typeof window !== 'undefined') return window.btoa; // browser
   else return nodeBtoa; // node
 }
 
-export async function getEnvAtob(){
+export function getEnvAtob(){
   if(typeof window !== 'undefined') return window.atob; // browser
   else return nodeAtob; // node
 }

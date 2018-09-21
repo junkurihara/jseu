@@ -1,4 +1,4 @@
-import jseu from '../dist/jseu.bundle.js';
+import jseu from '../dist/index.js';
 
 import chai from 'chai';
 // const should = chai.should();

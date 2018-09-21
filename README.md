@@ -21,7 +21,13 @@ At your project directory, do either one of the following.
 - From GitHub:
   ```shell
   $ git clone https://github.com/junkurihara/jseu.git
-  ``` 
+  ```
+  
+Then you should import the package as follows.
+```javascript
+import jseu from 'js-encoding-utils'; // for npm
+import jseu from 'jseu/dist/index.js'; // for git have
+```
   
 # Usage
 ## Base64 <-> Binary

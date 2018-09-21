@@ -34,14 +34,13 @@ const webConfig = {
   target: 'web',
   entry: {
     jseu: ['./src/index.js'],
-    // test: ['./test/api.hkdf.spec.mjs']
   },
   output: {
     filename: '[name].bundle.js',
     chunkFilename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: path.resolve(__dirname, 'dist'),
-    library: 'jscu',
+    library: 'jseu',
     libraryTarget: 'umd',
     globalObject: 'this' // for node js import
   },
@@ -76,6 +75,9 @@ module.exports = (env, argv) => {
   const config = webConfig;
   if (argv.mode === 'development'){
     config.devtool = 'inline-source-map'; // add inline source map
+    Object.assign(config.entry, {
+      'test': ['./test/formatter.spec.js']
+    });
   }
   // else if(argv.mode === 'production'){
   // }

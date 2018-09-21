@@ -12,10 +12,7 @@ import * as env from './env.js';
 export function encodeBase64(data){
   let str = '';
   if (typeof data === 'string') str = data;
-  else {
-    const u8data = sanitizeTypedArrayAndArrayBuffer(data);
-    str = String.fromCharCode.apply(null, u8data);
-  }
+  else str = arrayBufferToString(data);
 
   const btoa = env.getEnvBtoa();
   return btoa(str);
@@ -29,11 +26,7 @@ export function encodeBase64(data){
 export function decodeBase64(str){
   const atob = env.getEnvAtob();
   const binary = atob(str);
-  let data = new Uint8Array(binary.length);
-  for (let i = 0; i < binary.length; i++) {
-    data[i] = binary.charCodeAt(i);
-  }
-
+  const data = stringToArrayBuffer(binary);
   return getAsciiIfAscii(data);
 }
 
@@ -125,7 +118,7 @@ export function arrayBufferToHexString(data) {
  * @return {Uint8Array}
  */
 export function hexStringToArrayBuffer(str) {
-  if (!str || !(typeof str === 'string')) throw new Error('input arg must be non-null string');
+  if (!str || !(typeof str === 'string')) throw new Error('Input arg must be a non-null string');
   const arr = [];
   const len = str.length;
   for (let i = 0; i < len; i += 2) arr.push(parseInt(str.substr(i, 2), 16));
@@ -133,27 +126,22 @@ export function hexStringToArrayBuffer(str) {
 }
 
 /**
- * Encode ArrayBuffer or TypedArray to string with code
+ * Encode ArrayBuffer or TypedArray to string with code (like output of legacy atob)
  * @param data
  * @return {string}
  */
 export function arrayBufferToString(data) {
   const bytes = sanitizeTypedArrayAndArrayBuffer(data);
-  let binary = '';
-  const len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return binary;
+  return String.fromCharCode.apply(null, bytes);
 }
 
 /**
- * Decode string with code to Uint8Array
+ * Decode string with code (like output of legacy atob) to Uint8Array
  * @param str
  * @return {Uint8Array}
  */
 export function stringToArrayBuffer(str) {
-  if (!str || !(typeof str === 'string')) throw new Error('input arg must be non-null string');
+  if (!str || !(typeof str === 'string')) throw new Error('Input arg must be a non-null string');
   const bytes = new Uint8Array(str.length);
   for (let i = 0; i < str.length; i++) {
     bytes[i] = str.charCodeAt(i);

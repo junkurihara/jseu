@@ -12,6 +12,20 @@
   },
   "author": "Jun Kurihara",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/junkurihara/jseu.git"
+  },
+  "bugs": {
+    "url": "https://github.com/junkurihara/jseu/issues"
+  },
+  "homepage": "https://github.com/junkurihara/jseu#readme",
+  "keywords": [
+    "pem",
+    "base64",
+    "base64url",
+    "es6"
+  ],
   "devDependencies": {
     "@babel/cli": "7.1.0",
     "@babel/core": "7.1.0",

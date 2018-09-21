@@ -1,6 +1,6 @@
 {
   "name": "js-encoding-utils",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Miscellaneous Encoding Utilities for Crypto-related Objects in JavaScript",
   "main": "dist/jseu.bundle.js",
   "scripts": {

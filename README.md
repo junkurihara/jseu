@@ -1,6 +1,6 @@
 Miscellaneous Encoding Utilities for Crypto-related Objects in JavaScript
 --
-[![CircleCI](https://circleci.com/gh/junkurihara/jsbu.svg?style=svg)](https://circleci.com/gh/junkurihara/jsbu)
+[![CircleCI](https://circleci.com/gh/junkurihara/jseu.svg?style=svg)](https://circleci.com/gh/junkurihara/jseu)
 
 > **WARNING**: At this time this solution should be considered suitable for research and experimentation, further code and security review is needed before utilization in a production application.
 
@@ -26,7 +26,7 @@ At your project directory, do either one of the following.
 Then you should import the package as follows.
 ```javascript
 import jseu from 'js-encoding-utils'; // for npm
-import jseu from 'jseu/dist/index.js'; // for git have
+import jseu from 'jseu/dist/index.js'; // for github
 ```
   
 # Usage

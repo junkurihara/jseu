@@ -26,8 +26,8 @@
     "es6"
   ],
   "devDependencies": {
-    "@babel/cli": "7.1.0",
-    "@babel/core": "7.1.0",
+    "@babel/cli": "7.1.2",
+    "@babel/core": "7.1.2",
     "@babel/plugin-transform-runtime": "7.1.0",
     "@babel/polyfill": "7.0.0",
     "@babel/preset-env": "7.1.0",
@@ -48,10 +48,10 @@
     "mocha": "^5.2.0",
     "mocha-sinon": "^2.1.0",
     "webpack": "^4.20.2",
-    "webpack-cli": "^3.1.1"
+    "webpack-cli": "^3.1.2"
   },
   "dependencies": {
     "@babel/plugin-transform-regenerator": "7.0.0",
-    "@babel/runtime": "7.0.0"
+    "@babel/runtime": "7.1.2"
   }
 }

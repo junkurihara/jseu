@@ -1,4 +1,4 @@
-"use strict";var _interopRequireWildcard=require("@babel/runtime/helpers/interopRequireWildcard");Object.defineProperty(exports,"__esModule",{value:!0}),exports.pemToBin=pemToBin,exports.binToPem=binToPem;var encoder=_interopRequireWildcard(require("./encoder.js")),supportedPEMTypes={public:"PUBLIC KEY",private:"PRIVATE KEY",certificate:"CERTIFICATE",certRequest:"CERTIFICATE REQUEST"};/**
+"use strict";var _interopRequireWildcard=require("@babel/runtime/helpers/interopRequireWildcard");Object.defineProperty(exports,"__esModule",{value:!0}),exports.pemToBin=pemToBin,exports.binToPem=binToPem;var encoder=_interopRequireWildcard(require("./encoder.js")),supportedPEMTypes={public:"PUBLIC KEY",private:"PRIVATE KEY",encryptedPrivate:"ENCRYPTED PRIVATE KEY",certificate:"CERTIFICATE",certRequest:"CERTIFICATE REQUEST"};/**
  * Convert PEM armored string to Uint8Array
  * @param keydataB64Pem
  * @return {Uint8Array}

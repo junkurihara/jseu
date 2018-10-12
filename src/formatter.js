@@ -7,6 +7,7 @@ import * as encoder from "./encoder.js";
 const supportedPEMTypes = {
   'public': 'PUBLIC KEY',
   'private': 'PRIVATE KEY',
+  'encryptedPrivate': 'ENCRYPTED PRIVATE KEY',
   'certificate': 'CERTIFICATE',
   'certRequest': 'CERTIFICATE REQUEST'
 };

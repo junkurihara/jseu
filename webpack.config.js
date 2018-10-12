@@ -66,6 +66,7 @@ const webConfig = {
     }),
     new webpack.optimize.MinChunkSizePlugin({minChunkSize: 1000})
   ],
+  // https://github.com/webpack/webpack/issues/4240
   externals: { Buffer: "root buffer", buffer: "root Buffer" },
   node: {
     fs: 'empty',

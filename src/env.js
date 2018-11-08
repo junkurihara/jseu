@@ -26,7 +26,7 @@ const nodeBtoa = (str) => {
       buffer = Buffer.from(str);
     }
     else {
-      buffer = new Buffer.from(str.toString(), 'binary');
+      buffer = Buffer.from(str.toString(), 'binary');
     }
 
     return buffer.toString('base64');
@@ -36,7 +36,7 @@ const nodeBtoa = (str) => {
 
 const nodeAtob = (str) => {
   if(typeof Buffer !== 'undefined') {
-    return new Buffer.from(str, 'base64').toString('binary');
+    return Buffer.from(str, 'base64').toString('binary');
   }
   else throw new Error('UnsupportedEnvironment');
 };

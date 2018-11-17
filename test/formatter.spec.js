@@ -1,10 +1,13 @@
-import jseu from '../src/index.js';
-
 import chai from 'chai';
 // const should = chai.should();
 const expect = chai.expect;
 
-describe('Formatter Test', () => {
+import {getTestEnv} from './prepare.js';
+const env = getTestEnv();
+const jseu = env.library;
+const envName = env.envName;
+
+describe(`${envName}: Formatter Test`, () => {
   const certPEM =
     '-----BEGIN CERTIFICATE-----\n' +
     'MIIBxjCCAWwCCQCEZlhfc33wtzAKBggqhkjOPQQDAjBrMQswCQYDVQQGEwJKUDEO\n' +

@@ -1,10 +1,13 @@
-import jseu from '../src/index.js';
-
 import chai from 'chai';
 // const should = chai.should();
 const expect = chai.expect;
 
-describe('Encoder Test', () => {
+import {getTestEnv} from './prepare.js';
+const env = getTestEnv();
+const jseu = env.library;
+const envName = env.envName;
+
+describe(`${envName}: Encoder Test`, () => {
   let msg;
   let b64uMsg;
   let b64Msg;

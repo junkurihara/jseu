@@ -1,6 +1,11 @@
 Miscellaneous Encoding Utilities for Crypto-related Objects in JavaScript
 --
+[![npm version](https://badge.fury.io/js/js-encoding-utils.svg)](https://badge.fury.io/js/js-encoding-utils)
 [![CircleCI](https://circleci.com/gh/junkurihara/jseu.svg?style=svg)](https://circleci.com/gh/junkurihara/jseu)
+[![Dependencies](https://david-dm.org/junkurihara/jseu.svg)](https://david-dm.org/junkurihara/jseu)
+[![Maintainability](https://api.codeclimate.com/v1/badges/771abd93ae5d986f1e0a/maintainability)](https://codeclimate.com/github/junkurihara/jseu/maintainability)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 > **WARNING**: At this time this solution should be considered suitable for research and experimentation, further code and security review is needed before utilization in a production application.
 

@@ -5,7 +5,6 @@
     ":pinOnlyDevDependencies"
   ],
   "assignees": ["junkurihara"],
-  "baseBranches": ["master", "develop"],
   "automerge": true,
   "major": {
     "automerge": false

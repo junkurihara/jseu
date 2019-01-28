@@ -67,7 +67,7 @@ jobs:
         command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
     - run:
         name: Build production module
-        command: npm run build
+        command: yarn build
     - run:
         name: Publish package
         command: npm publish

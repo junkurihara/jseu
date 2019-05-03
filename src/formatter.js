@@ -17,10 +17,10 @@ const supportedPEMTypes = {
  * @param keydataB64Pem
  * @return {Uint8Array}
  */
-export function pemToBin(keydataB64Pem) {
+export const pemToBin = (keydataB64Pem) => {
   const keydataB64 = dearmorPem(keydataB64Pem);
   return encoder.decodeBase64(keydataB64);
-}
+};
 
 /**
  * Convert ArrayBuffer or TypedArray to PEM armored string with a specified type
@@ -28,10 +28,10 @@ export function pemToBin(keydataB64Pem) {
  * @param type
  * @return {string}
  */
-export function binToPem(keydata, type) {
+export const binToPem = (keydata, type) => {
   const keydataB64 = encoder.encodeBase64(keydata);
   return formatAsPem(keydataB64, type);
-}
+};
 
 /**
  * Armor the given Base64 string and return PEM formatted string
@@ -39,7 +39,7 @@ export function binToPem(keydata, type) {
  * @param type
  * @return {string}
  */
-function formatAsPem(str, type) {
+const formatAsPem = (str, type) => {
   if (!str || !(typeof str === 'string')) throw new Error('Input arg must be a non-null string');
   if (!type || !(typeof type === 'string')) throw new Error('Input arg must be a non-null string');
 
@@ -57,14 +57,14 @@ function formatAsPem(str, type) {
   finalString = `${finalString}-----END ${typeString}-----`;
 
   return finalString;
-}
+};
 
 /**
  * Dearmor the given PEM string and return Base64 string
  * @param str
  * @return {string}
  */
-function dearmorPem(str) {
+const dearmorPem = (str) => {
   if (!str || !(typeof str === 'string')) throw new Error('Input arg must be a non-null string');
 
   // const beginRegExp = RegExp('^-----[\s]*BEGIN[^-]*KEY-----$', 'gm');
@@ -81,5 +81,5 @@ function dearmorPem(str) {
   } catch (e) {
     throw new Error('Invalid format as PEM');
   }
-}
+};
 

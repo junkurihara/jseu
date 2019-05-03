@@ -3,15 +3,15 @@
  * env.js
  */
 
-export function getEnvBtoa(){
+export const getEnvBtoa = () => {
   if(typeof window !== 'undefined') return window.btoa; // browser
   else return nodeBtoa; // node
-}
+};
 
-export function getEnvAtob(){
+export const getEnvAtob = () => {
   if(typeof window !== 'undefined') return window.atob; // browser
   else return nodeAtob; // node
-}
+};
 
 const nodeBtoa = (str) => {
   if(typeof Buffer !== 'undefined') {

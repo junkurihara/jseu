@@ -138,6 +138,6 @@ export const arrayBufferToString = (data: ArrayBuffer|TypedArray): string => {
  */
 export const stringToArrayBuffer = (str: string): Uint8Array => {
   const bytes = new Uint8Array(str.length);
-  return bytes.map( (x, i) => str.charCodeAt(i));
+  return bytes.map( (_x, i) => str.charCodeAt(i));
 
 };

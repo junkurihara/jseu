@@ -2,14 +2,15 @@
  * encoder.js
  */
 
-import * as env from './env.js';
+import * as env from './env';
+import TypedArray = NodeJS.TypedArray;
 
 /**
  * Encode ArrayBuffer or TypedArray To Base64
  * @param data
  * @return {*}
  */
-export const encodeBase64 = (data) => {
+export const encodeBase64 = (data: string|ArrayBuffer|TypedArray) => {
   let str = '';
   if (typeof data === 'string') str = data;
   else str = arrayBufferToString(data);
@@ -23,7 +24,7 @@ export const encodeBase64 = (data) => {
  * @param str
  * @return {Uint8Array|string|*}
  */
-export const decodeBase64 = (str) => {
+export const decodeBase64 = (str: string) => {
   const atob = env.getEnvAtob();
   const binary = atob(str);
   const data = stringToArrayBuffer(binary);
@@ -35,7 +36,7 @@ export const decodeBase64 = (str) => {
  * @param data
  * @return {Uint8Array}
  */
-const sanitizeTypedArrayAndArrayBuffer = (data) => {
+const sanitizeTypedArrayAndArrayBuffer = (data: ArrayBuffer|TypedArray) => {
   if(data instanceof Uint8Array) return data;
 
   if (ArrayBuffer.isView(data) && typeof data.buffer !== 'undefined') { // TypedArray except Uint8Array
@@ -44,7 +45,7 @@ const sanitizeTypedArrayAndArrayBuffer = (data) => {
   else if (data instanceof ArrayBuffer) { // ArrayBuffer
     return new Uint8Array(data);
   }
-  else throw new Error('Input must be an ArrayBuffer or a TypedArray')
+  else throw new Error('Input must be an ArrayBuffer or a TypedArray');
 };
 
 
@@ -53,24 +54,21 @@ const sanitizeTypedArrayAndArrayBuffer = (data) => {
  * @param data
  * @return {Uint8Array|string|*}
  */
-const getAsciiIfAscii = (data) => {
-  if (data instanceof Uint8Array) {
-    let flag = true;
-    for (let i = 0; i < data.length; i++) {
-      if (data[i] > 0x7e || (data[i] < 0x20 && data[i] !== 0x0d && data[i] !== 0x0a)) {
-        flag = false;
-        break;
-      }
+const getAsciiIfAscii = (data: Uint8Array) => {
+  let flag = true;
+  for (let i = 0; i < data.length; i++) {
+    if (data[i] > 0x7e || (data[i] < 0x20 && data[i] !== 0x0d && data[i] !== 0x0a)) {
+      flag = false;
+      break;
     }
-    let returnData = null;
-    if (flag) {
-      returnData = '';
-      for (let i = 0; i < data.length; i++) returnData += String.fromCharCode(data[i]);
-    }
-    else returnData = data;
-    return returnData;
   }
-  else throw new Error('Input data must be an Uint8Array');
+  let returnData = null;
+  if (flag) {
+    returnData = '';
+    for (let i = 0; i < data.length; i++) returnData += String.fromCharCode(data[i]);
+  }
+  else returnData = data;
+  return returnData;
 };
 
 /**
@@ -78,17 +76,14 @@ const getAsciiIfAscii = (data) => {
  * @param data
  * @return {string}
  */
-export const encodeBase64Url = (data) => {
-  return encodeBase64(data).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-};
+export const encodeBase64Url = (data: ArrayBuffer|Uint8Array) => encodeBase64(data).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 
 /**
  * Decode Base64Url string to Uint8Array
  * @param str
  * @return {Uint8Array}
  */
-export const decodeBase64Url = (str) => {
-  if (typeof str !== 'string') throw new Error('Input must be string');
+export const decodeBase64Url = (str: string) => {
   str = str.replace(/-/g, '+').replace(/_/g, '/');
   // str = str + "=".repeat(str.length % 4); // this sometimes causes error...
 
@@ -100,7 +95,7 @@ export const decodeBase64Url = (str) => {
  * @param data
  * @return {string}
  */
-export const arrayBufferToHexString = (data) => {
+export const arrayBufferToHexString = (data: ArrayBuffer|TypedArray): string => {
   const arr = sanitizeTypedArrayAndArrayBuffer(data);
 
   let hexStr = '';
@@ -117,8 +112,7 @@ export const arrayBufferToHexString = (data) => {
  * @param str
  * @return {Uint8Array}
  */
-export const hexStringToArrayBuffer = (str) => {
-  if (!str || !(typeof str === 'string')) throw new Error('Input arg must be a non-null string');
+export const hexStringToArrayBuffer = (str:string) => {
   const arr = [];
   const len = str.length;
   for (let i = 0; i < len; i += 2) arr.push(parseInt(str.substr(i, 2), 16));
@@ -130,8 +124,9 @@ export const hexStringToArrayBuffer = (str) => {
  * @param data
  * @return {string}
  */
-export const arrayBufferToString = (data) => {
+export const arrayBufferToString = (data: ArrayBuffer|TypedArray) => {
   const bytes = sanitizeTypedArrayAndArrayBuffer(data);
+  // @ts-ignore // TODO: FIX
   return String.fromCharCode.apply(null, bytes);
 };
 
@@ -140,8 +135,7 @@ export const arrayBufferToString = (data) => {
  * @param str
  * @return {Uint8Array}
  */
-export const stringToArrayBuffer = (str) => {
-  if (!str || !(typeof str === 'string')) throw new Error('Input arg must be a non-null string');
+export const stringToArrayBuffer = (str: string) => {
   const bytes = new Uint8Array(str.length);
   for (let i = 0; i < str.length; i++) {
     bytes[i] = str.charCodeAt(i);

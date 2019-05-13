@@ -1,7 +1,9 @@
 /**
- * prepare.js
+ * prepare.ts
  */
+
 const common = require('../webpack.common.js');
+
 
 export function getTestEnv(){
   let envName;
@@ -13,9 +15,9 @@ export function getTestEnv(){
     library = require(`../dist/${common.bundleName}`);
   }
   else if (process.env.TEST_ENV === 'window'){
-    if(typeof window !== 'undefined' && typeof window[common.libName] !== 'undefined'){
+    if(typeof window !== 'undefined' && typeof (<any>window)[common.libName] !== 'undefined'){
       envName = 'Window';
-      library = window[common.libName];
+      library = (<any>window)[common.libName];
       message = '**This is a test with a library imported from window.**';
     }
     else{
@@ -28,7 +30,6 @@ export function getTestEnv(){
     envName = 'Source';
     library = require(`../src/${common.entryName}`);
     message = '**This is a test with source codes in src.**';
-
   }
 
   return {library, envName, message};

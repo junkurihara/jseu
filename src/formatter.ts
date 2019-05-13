@@ -2,7 +2,8 @@
  * formatter.js
  */
 
-import * as encoder from "./encoder.js";
+import * as encoder from './encoder';
+import TypedArray = NodeJS.TypedArray;
 
 const supportedPEMTypes = {
   'public': 'PUBLIC KEY',
@@ -17,7 +18,7 @@ const supportedPEMTypes = {
  * @param keydataB64Pem
  * @return {Uint8Array}
  */
-export const pemToBin = (keydataB64Pem) => {
+export const pemToBin = (keydataB64Pem: string) => {
   const keydataB64 = dearmorPem(keydataB64Pem);
   return encoder.decodeBase64(keydataB64);
 };
@@ -28,7 +29,7 @@ export const pemToBin = (keydataB64Pem) => {
  * @param type
  * @return {string}
  */
-export const binToPem = (keydata, type) => {
+export const binToPem = (keydata: ArrayBuffer|TypedArray, type: string) => {
   const keydataB64 = encoder.encodeBase64(keydata);
   return formatAsPem(keydataB64, type);
 };
@@ -39,12 +40,10 @@ export const binToPem = (keydata, type) => {
  * @param type
  * @return {string}
  */
-const formatAsPem = (str, type) => {
-  if (!str || !(typeof str === 'string')) throw new Error('Input arg must be a non-null string');
-  if (!type || !(typeof type === 'string')) throw new Error('Input arg must be a non-null string');
-
+const formatAsPem = (str: string, type: string) => {
   if (Object.keys(supportedPEMTypes).indexOf(type) < 0) throw new Error('Unsupported type');
 
+  // @ts-ignore: // TODO: FIX
   const typeString = supportedPEMTypes[type];
 
   let finalString = `-----BEGIN ${typeString}-----\n`;
@@ -64,9 +63,7 @@ const formatAsPem = (str, type) => {
  * @param str
  * @return {string}
  */
-const dearmorPem = (str) => {
-  if (!str || !(typeof str === 'string')) throw new Error('Input arg must be a non-null string');
-
+const dearmorPem = (str: string) => {
   // const beginRegExp = RegExp('^-----[\s]*BEGIN[^-]*KEY-----$', 'gm');
   // const endRegExp = RegExp('^-----[\s]*END[^-]*KEY-----$', 'gm');
   const beginRegExp = RegExp('^-----[\s]*BEGIN[^-]*-----$', 'gm');

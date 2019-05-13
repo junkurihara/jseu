@@ -2,7 +2,7 @@ import chai from 'chai';
 // const should = chai.should();
 const expect = chai.expect;
 
-import {getTestEnv} from './prepare.js';
+import {getTestEnv} from './prepare';
 const env = getTestEnv();
 const jseu = env.library;
 const envName = env.envName;

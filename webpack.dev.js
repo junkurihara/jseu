@@ -7,6 +7,8 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const jsdom = require('jsdom');
 
+const path = require('path');
+
 // webpack main configration
 const webpackConfig = {
   mode: 'development',
@@ -19,6 +21,19 @@ const webpackConfig = {
       }
     })
   ],
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        exclude: [ path.resolve(__dirname, 'test') ],
+        enforce: 'post',
+        use: {
+          loader: 'istanbul-instrumenter-loader',
+          options: { esModules: true }
+        }
+      }
+    ]
+  },
   devtool: 'inline-source-map' // add inline source map
 };
 
@@ -65,7 +80,7 @@ const testHtmlName = './test/html/test.html';
 // get test file names for test with static html
 function getEntriesForHTMLTest (config) {
   const parentDir = './test';
-  const testFiles = getFilteredFileList(parentDir, new RegExp('.*\\.spec\\.js$'));
+  const testFiles = getFilteredFileList(parentDir, new RegExp('.*\\.spec\\.ts$'));
 
   config.entry = {};
   testFiles.map( (file) => {

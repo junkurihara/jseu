@@ -5,7 +5,7 @@
 import * as encoder from './encoder';
 import TypedArray = NodeJS.TypedArray;
 
-const supportedPEMTypes = {
+const supportedPEMTypes: {[index: string]: string} = {
   'public': 'PUBLIC KEY',
   'private': 'PRIVATE KEY',
   'encryptedPrivate': 'ENCRYPTED PRIVATE KEY',
@@ -18,7 +18,7 @@ const supportedPEMTypes = {
  * @param keydataB64Pem
  * @return {Uint8Array}
  */
-export const pemToBin = (keydataB64Pem: string) => {
+export const pemToBin = (keydataB64Pem: string): Uint8Array|string => {
   const keydataB64 = dearmorPem(keydataB64Pem);
   return encoder.decodeBase64(keydataB64);
 };
@@ -40,10 +40,9 @@ export const binToPem = (keydata: ArrayBuffer|TypedArray, type: string) => {
  * @param type
  * @return {string}
  */
-const formatAsPem = (str: string, type: string) => {
+const formatAsPem = (str: string, type: string): string => {
   if (Object.keys(supportedPEMTypes).indexOf(type) < 0) throw new Error('Unsupported type');
 
-  // @ts-ignore: // TODO: FIX
   const typeString = supportedPEMTypes[type];
 
   let finalString = `-----BEGIN ${typeString}-----\n`;
@@ -63,7 +62,7 @@ const formatAsPem = (str: string, type: string) => {
  * @param str
  * @return {string}
  */
-const dearmorPem = (str: string) => {
+const dearmorPem = (str: string): string => {
   // const beginRegExp = RegExp('^-----[\s]*BEGIN[^-]*KEY-----$', 'gm');
   // const endRegExp = RegExp('^-----[\s]*END[^-]*KEY-----$', 'gm');
   const beginRegExp = RegExp('^-----[\s]*BEGIN[^-]*-----$', 'gm');

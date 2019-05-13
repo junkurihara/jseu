@@ -10,7 +10,7 @@ import TypedArray = NodeJS.TypedArray;
  * @param data
  * @return {*}
  */
-export const encodeBase64 = (data: string|ArrayBuffer|TypedArray) => {
+export const encodeBase64 = (data: string|ArrayBuffer|TypedArray): string => {
   let str = '';
   if (typeof data === 'string') str = data;
   else str = arrayBufferToString(data);
@@ -24,7 +24,7 @@ export const encodeBase64 = (data: string|ArrayBuffer|TypedArray) => {
  * @param str
  * @return {Uint8Array|string|*}
  */
-export const decodeBase64 = (str: string) => {
+export const decodeBase64 = (str: string): Uint8Array|string => {
   const atob = env.getEnvAtob();
   const binary = atob(str);
   const data = stringToArrayBuffer(binary);
@@ -36,7 +36,7 @@ export const decodeBase64 = (str: string) => {
  * @param data
  * @return {Uint8Array}
  */
-const sanitizeTypedArrayAndArrayBuffer = (data: ArrayBuffer|TypedArray) => {
+const sanitizeTypedArrayAndArrayBuffer = (data: ArrayBuffer|TypedArray): Uint8Array => {
   if(data instanceof Uint8Array) return data;
 
   if (ArrayBuffer.isView(data) && typeof data.buffer !== 'undefined') { // TypedArray except Uint8Array
@@ -54,7 +54,7 @@ const sanitizeTypedArrayAndArrayBuffer = (data: ArrayBuffer|TypedArray) => {
  * @param data
  * @return {Uint8Array|string|*}
  */
-const getAsciiIfAscii = (data: Uint8Array) => {
+const getAsciiIfAscii = (data: Uint8Array): Uint8Array|string => {
   let flag = true;
   for (let i = 0; i < data.length; i++) {
     if (data[i] > 0x7e || (data[i] < 0x20 && data[i] !== 0x0d && data[i] !== 0x0a)) {
@@ -76,7 +76,7 @@ const getAsciiIfAscii = (data: Uint8Array) => {
  * @param data
  * @return {string}
  */
-export const encodeBase64Url = (data: ArrayBuffer|Uint8Array) => encodeBase64(data).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+export const encodeBase64Url = (data: ArrayBuffer|Uint8Array): string => encodeBase64(data).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 
 /**
  * Decode Base64Url string to Uint8Array
@@ -112,7 +112,7 @@ export const arrayBufferToHexString = (data: ArrayBuffer|TypedArray): string => 
  * @param str
  * @return {Uint8Array}
  */
-export const hexStringToArrayBuffer = (str:string) => {
+export const hexStringToArrayBuffer = (str:string): Uint8Array => {
   const arr = [];
   const len = str.length;
   for (let i = 0; i < len; i += 2) arr.push(parseInt(str.substr(i, 2), 16));
@@ -124,10 +124,11 @@ export const hexStringToArrayBuffer = (str:string) => {
  * @param data
  * @return {string}
  */
-export const arrayBufferToString = (data: ArrayBuffer|TypedArray) => {
+export const arrayBufferToString = (data: ArrayBuffer|TypedArray): string => {
   const bytes = sanitizeTypedArrayAndArrayBuffer(data);
-  // @ts-ignore // TODO: FIX
-  return String.fromCharCode.apply(null, bytes);
+  const arr: number[] = new Array(bytes.length);
+  bytes.forEach( (x, i) => { arr[i] = x; });
+  return String.fromCharCode.apply(null, arr);
 };
 
 /**
@@ -135,10 +136,8 @@ export const arrayBufferToString = (data: ArrayBuffer|TypedArray) => {
  * @param str
  * @return {Uint8Array}
  */
-export const stringToArrayBuffer = (str: string) => {
+export const stringToArrayBuffer = (str: string): Uint8Array => {
   const bytes = new Uint8Array(str.length);
-  for (let i = 0; i < str.length; i++) {
-    bytes[i] = str.charCodeAt(i);
-  }
-  return bytes;
+  return bytes.map( (x, i) => str.charCodeAt(i));
+
 };

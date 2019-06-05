@@ -2,17 +2,17 @@ import chai from 'chai';
 // const should = chai.should();
 const expect = chai.expect;
 
-import {getTestEnv} from './prepare.js';
+import {getTestEnv} from './prepare';
 const env = getTestEnv();
 const jseu = env.library;
 const envName = env.envName;
 
 describe(`${envName}: Encoder Test`, () => {
-  let msg;
-  let b64uMsg;
-  let b64Msg;
-  let hexMsg;
-  let strMsg;
+  let msg: Uint8Array;
+  let b64uMsg: string;
+  let b64Msg: string;
+  let hexMsg: string;
+  let strMsg: string;
   before( async () => {
     msg = new Uint8Array(32);
     for(let i = 0; i < 32; i++) msg[i] = 0xFF & i;

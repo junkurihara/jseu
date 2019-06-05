@@ -1,6 +1,6 @@
 {
   "name": "js-encoding-utils",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Miscellaneous Encoding Utilities for Crypto-related Objects in JavaScript",
   "main": "dist/index.js",
   "scripts": {
@@ -72,7 +72,5 @@
     "webpack-common-shake": "2.1.0",
     "webpack-merge": "4.2.1"
   },
-  "dependencies": {
-    "@babel/runtime": "^7.4.3"
-  }
+  "dependencies": {}
 }

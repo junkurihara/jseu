@@ -49,10 +49,7 @@ jobs:
       - run: sudo apt install lcov
       - run: find ./coverage  -name lcov.info -exec echo -a {} \; | xargs lcov -o ./coverage/merged-lcov.info
       - codecov/upload:
-      #    file: ./coverage/merged-lcov.info
-          file: ./coverage/nyc/lcov.info
-      - codecov/upload:
-          file: ./coverage/karma/lcov.info
+          file: ./coverage/merged-lcov.info
 
       - store_artifacts:
           path: ./coverage

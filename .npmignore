@@ -18,3 +18,4 @@ webpack.dev.js
 coverage/
 .nyc_output
 renovate.json
+*.map

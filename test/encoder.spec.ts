@@ -66,4 +66,11 @@ describe(`${envName}: Encoder Test`, () => {
     const decoded = jseu.encoder.arrayBufferToString(encoded);
     expect(strMsg === decoded).to.be.true;
   });
+
+  it('Encode Base64 from String', async () => {
+    const str = (new Uint8Array([0, 1, 2, 3, 4])).toString();
+    const encoded = jseu.encoder.encodeBase64(str);
+    const decoded = jseu.encoder.decodeBase64(encoded);
+    expect( str ===  decoded).to.be.true;
+  });
 });

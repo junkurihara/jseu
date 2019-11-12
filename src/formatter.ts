@@ -5,7 +5,8 @@
 import * as encoder from './encoder';
 import TypedArray = NodeJS.TypedArray;
 
-const supportedPEMTypes: {[index: string]: string} = {
+type SupportedPemTypes = 'public'|'private'|'encryptedPrivate'|'certificate'|'certRequest';
+const PemArmorString: {[index: string]: string} = {
   'public': 'PUBLIC KEY',
   'private': 'PRIVATE KEY',
   'encryptedPrivate': 'ENCRYPTED PRIVATE KEY',
@@ -29,7 +30,7 @@ export const pemToBin = (keydataB64Pem: string): Uint8Array|string => {
  * @param type
  * @return {string}
  */
-export const binToPem = (keydata: ArrayBuffer|TypedArray, type: string) => {
+export const binToPem = (keydata: ArrayBuffer|TypedArray, type: SupportedPemTypes) => {
   const keydataB64 = encoder.encodeBase64(keydata);
   return formatAsPem(keydataB64, type);
 };
@@ -40,10 +41,8 @@ export const binToPem = (keydata: ArrayBuffer|TypedArray, type: string) => {
  * @param type
  * @return {string}
  */
-const formatAsPem = (str: string, type: string): string => {
-  if (Object.keys(supportedPEMTypes).indexOf(type) < 0) throw new Error('Unsupported type');
-
-  const typeString = supportedPEMTypes[type];
+const formatAsPem = (str: string, type: SupportedPemTypes): string => {
+  const typeString = PemArmorString[type];
 
   let finalString = `-----BEGIN ${typeString}-----\n`;
 

@@ -20,5 +20,4 @@ export namespace formatter {
   export const pemToBin = Formatter.pemToBin;
 }
 
-//export default {encoder, formatter};
-//export {encoder, formatter};
+export default {encoder, formatter};

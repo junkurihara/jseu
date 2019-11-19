@@ -42,10 +42,7 @@ const sanitizeTypedArrayAndArrayBuffer = (data: ArrayBuffer|TypedArray): Uint8Ar
   if (ArrayBuffer.isView(data) && typeof data.buffer !== 'undefined') { // TypedArray except Uint8Array
     return new Uint8Array(data.buffer);
   }
-  else if (data instanceof ArrayBuffer) { // ArrayBuffer
-    return new Uint8Array(data);
-  }
-  else throw new Error('Input must be an ArrayBuffer or a TypedArray');
+  else return new Uint8Array(data); // ArrayBuffer
 };
 
 

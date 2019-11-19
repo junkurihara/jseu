@@ -15,20 +15,7 @@ export const getEnvAtob = () => {
 
 const nodeBtoa = (str: string): string => {
   if(typeof Buffer === 'undefined') throw new Error('UnsupportedEnvironment');
-
-  let buffer;
-  const type = Object.prototype.toString.call(str).slice(8, -1);
-  const typedArrays = ['ArrayBuffer', 'TypedArray', 'Uint8Array', 'Int8Array', 'Uint8ClampedArray', 'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array', 'Float32Array', 'Float64Array'];
-
-  if (Buffer.isBuffer(str)) {
-    buffer = str;
-  }
-  else if (typedArrays.indexOf(type) >= 0) {
-    buffer = Buffer.from(str);
-  }
-  else {
-    buffer = Buffer.from(str.toString(), 'binary');
-  }
+  const buffer = Buffer.from(str.toString(), 'binary');
 
   return buffer.toString('base64');
 

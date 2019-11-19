@@ -41,7 +41,7 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       './src/**/*.ts': [],
-      './test/**/*.spec.ts': ['webpack']
+      './test/**/*.spec.ts': ['webpack', 'sourcemap']
     },
 
     webpack: getWebpackConfig(),
@@ -58,7 +58,7 @@ module.exports = function(config) {
     reporters: ['coverage-istanbul'],
     coverageIstanbulReporter: {
       reports: [ 'lcov', 'text-summary' ],
-      dir: path.join(__dirname, 'coverage'),
+      dir: path.join(__dirname, 'coverage/karma'),
       fixWebpackSourcePaths: true,
       'report-config': {
         html: { outdir: 'html' }

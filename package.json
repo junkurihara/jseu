@@ -42,7 +42,7 @@
     "es6"
   ],
   "devDependencies": {
-    "@types/chai": "4.2.6",
+    "@types/chai": "4.2.7",
     "@types/mocha": "5.2.7",
     "@types/node": "12.12.16",
     "@typescript-eslint/eslint-plugin": "2.11.0",

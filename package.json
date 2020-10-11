@@ -71,12 +71,7 @@
     "tsc": "1.20150623.0",
     "typescript": "4.0.3",
     "webpack": "5.0.0",
-<<<<<<< HEAD
-    "webpack-cli": "3.3.12",
-=======
     "webpack-cli": "4.0.0",
-    "webpack-common-shake": "2.1.0",
->>>>>>> d7aee966ed2e1b8a6b8b1c3adc00137f7f76df88
     "webpack-merge": "5.2.0"
   }
 }

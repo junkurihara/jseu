@@ -12,6 +12,9 @@ const path = require('path');
 // webpack main configration
 const webpackConfig = {
   mode: 'development',
+  resolve: {
+    fallback: { 'path': require.resolve('path-browserify') }
+  },
   plugins:[
     new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
     new webpack.optimize.MinChunkSizePlugin({minChunkSize: 1000}),
@@ -34,7 +37,10 @@ const webpackConfig = {
       }
     ]
   },
-  devtool: 'inline-source-map' // add inline source map
+  devtool: 'inline-source-map',// add inline source map
+  output: {
+    devtoolModuleFilenameTemplate: 'root/[resource-path]'
+  },
 };
 
 // export main configuration adjusted to various environments

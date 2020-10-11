@@ -1,16 +1,16 @@
 // Karma configuration
 // Generated on Wed Jun 13 2018 13:09:34 GMT+0900 (JST)
 const common = require('./webpack.common.js');
-const webpackConfig = require('./webpack.dev.js');
-// const babelExtraPlugins = ['babel-plugin-istanbul'];
-const getWebpackConfig = () => {
-  const config = webpackConfig(null, {mode: 'development'});
-  delete config.entry;
-  delete config.output;
-
-  return config;
-};
-const path = require('path');
+// const webpackConfig = require('./webpack.dev.js');
+// // const babelExtraPlugins = ['babel-plugin-istanbul'];
+// const getWebpackConfig = () => {
+//   const config = webpackConfig(null, {mode: 'development'});
+//   delete config.entry;
+//   delete config.output;
+//
+//   return config;
+// };
+// const path = require('path');
 
 
 module.exports = function(config) {
@@ -28,7 +28,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       `./dist/${common.bundleName}`,
-      './test/**/*.spec.ts'
+      './test/html/*.bundle.js',
+      //'./test/**/*.spec.ts'
     ],
 
 
@@ -40,30 +41,45 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './src/**/*.ts': [],
-      './test/**/*.spec.ts': ['webpack', 'sourcemap']
+      // './src/**/*.ts': [],
+      './test/html/*.bundle.js': ['coverage']
+      //'./test/**/*.spec.ts': ['webpack', 'sourcemap']
     },
 
-    webpack: getWebpackConfig(),
+    //webpack: getWebpackConfig(),
 
-    webpackMiddleware: {
-      // webpack-dev-middleware configuration
-      // i. e.
-      stats: 'errors-only',
-    },
+    // webpackMiddleware: {
+    //   // webpack-dev-middleware configuration
+    //   // i. e.
+    //   stats: 'errors-only',
+    // },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['coverage-istanbul'],
-    coverageIstanbulReporter: {
-      reports: [ 'lcov', 'text-summary' ],
-      dir: path.join(__dirname, 'coverage/karma'),
-      fixWebpackSourcePaths: true,
-      'report-config': {
-        html: { outdir: 'html' }
+    reporters: ['mocha', 'coverage', 'karma-remap-istanbul'],
+    //coverageReporter: { type: 'lcov' },
+    remapIstanbulReporter: {
+      remapOptions: {
+        exclude: /root\/(node_modules|webpack|test|[^(src)])\?*/
+      }, //additional remap options
+      reportOptions: {}, //additional report options
+      //出力形式や、出力先を指定する
+      reports: {
+        lcovonly: 'coverage/remap/lcov/lcov.info',
+        html: 'coverage/remap/html',
+        cobertura: 'coverage/remap/cobertura/cobertura.xml'
       }
     },
+    // reporters: ['coverage-istanbul'],
+    // coverageIstanbulReporter: {
+    //   reports: [ 'lcov', 'text-summary' ],
+    //   dir: path.join(__dirname, 'coverage/karma'),
+    //   fixWebpackSourcePaths: true,
+    //   'report-config': {
+    //     html: { outdir: 'html' }
+    //   }
+    // },
 
     // web server port
     port: 9876,

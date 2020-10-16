@@ -1,7 +1,3 @@
-import chai from 'chai';
-// const should = chai.should();
-const expect = chai.expect;
-
 import {getTestEnv} from './prepare';
 const env = getTestEnv();
 const jseu = env.library;
@@ -25,7 +21,7 @@ describe(`${envName}: Formatter Test`, () => {
   it('PEM <-> DER Formatter Test', async () => {
     const binCert = jseu.formatter.pemToBin(certPEM);
     const pemCert = jseu.formatter.binToPem(binCert, 'certificate');
-    expect(pemCert === certPEM).to.be.true;
+    expect(pemCert === certPEM).toBeTruthy();
   });
 
 });

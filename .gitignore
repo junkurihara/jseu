@@ -3,8 +3,9 @@ node_modules
 obsolete
 thumbs.db
 yarn-error.log
-.idea
-.vscode
+.idea/
+.vscode/
 coverage
 .nyc_output
 dist
+yarn.lock

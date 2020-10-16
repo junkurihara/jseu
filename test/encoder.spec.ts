@@ -1,7 +1,3 @@
-import chai from 'chai';
-// const should = chai.should();
-const expect = chai.expect;
-
 import {getTestEnv} from './prepare';
 const env = getTestEnv();
 const jseu = env.library;
@@ -13,7 +9,7 @@ describe(`${envName}: Encoder Test`, () => {
   let b64Msg: string;
   let hexMsg: string;
   let strMsg: string;
-  before( async () => {
+  beforeAll( async () => {
     msg = new Uint8Array(32);
     for(let i = 0; i < 32; i++) msg[i] = 0xFF & i;
     b64Msg = 'AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=';
@@ -24,53 +20,53 @@ describe(`${envName}: Encoder Test`, () => {
 
   it('Encode/Decode Base64 Test', async () => {
     const encoded = jseu.encoder.encodeBase64(msg);
-    expect(b64Msg === encoded).to.be.true;
+    expect(b64Msg === encoded).toBeTruthy();
 
     // Check ArrayBuffer and Other Typed Array Format As Inputs
     const encoded_ab = jseu.encoder.encodeBase64(msg.buffer);
     const encoded_u32 = jseu.encoder.encodeBase64(new Uint32Array(msg.buffer));
-    expect(encoded_ab === encoded).to.be.true;
-    expect(encoded_u32 === encoded).to.be.true;
+    expect(encoded_ab === encoded).toBeTruthy();
+    expect(encoded_u32 === encoded).toBeTruthy();
 
     const decoded = jseu.encoder.decodeBase64(encoded);
-    expect(msg.toString() === decoded.toString()).to.be.true;
+    expect(msg.toString() === decoded.toString()).toBeTruthy();
   });
 
 
   it('Encode/Decode Base64Url Test', async () => {
     const encoded = jseu.encoder.encodeBase64Url(msg);
-    expect(b64uMsg === encoded).to.be.true;
+    expect(b64uMsg === encoded).toBeTruthy();
 
     const decoded = jseu.encoder.decodeBase64Url(encoded);
-    expect(msg.toString() === decoded.toString()).to.be.true;
+    expect(msg.toString() === decoded.toString()).toBeTruthy();
   });
 
 
   it('Encode/Decode HexString Test', async () => {
     const encoded = jseu.encoder.arrayBufferToHexString(msg);
-    expect(hexMsg === encoded).to.be.true;
+    expect(hexMsg === encoded).toBeTruthy();
 
     // Check ArrayBuffer and Other Typed Array Format As Inputs
     const encoded_ab = jseu.encoder.arrayBufferToHexString(msg.buffer);
     const encoded_u32 = jseu.encoder.arrayBufferToHexString(new Uint32Array(msg.buffer));
-    expect(encoded_ab === encoded).to.be.true;
-    expect(encoded_u32 === encoded).to.be.true;
+    expect(encoded_ab === encoded).toBeTruthy();
+    expect(encoded_u32 === encoded).toBeTruthy();
 
     const decoded = jseu.encoder.hexStringToArrayBuffer(encoded);
-    expect(msg.toString() === decoded.toString()).to.be.true;
+    expect(msg.toString() === decoded.toString()).toBeTruthy();
   });
 
 
   it('Encode/Decode String Test', async () => {
     const encoded = jseu.encoder.stringToArrayBuffer(msg.toString());
     const decoded = jseu.encoder.arrayBufferToString(encoded);
-    expect(strMsg === decoded).to.be.true;
+    expect(strMsg === decoded).toBeTruthy();
   });
 
   it('Encode Base64 from String', async () => {
     const str = (new Uint8Array([0, 1, 2, 3, 4])).toString();
     const encoded = jseu.encoder.encodeBase64(str);
     const decoded = jseu.encoder.decodeBase64(encoded);
-    expect( str ===  decoded).to.be.true;
+    expect( str ===  decoded).toBeTruthy();
   });
 });

@@ -2,7 +2,6 @@ Miscellaneous Encoding Utilities for Crypto-related Objects in JavaScript
 --
 [![npm version](https://badge.fury.io/js/js-encoding-utils.svg)](https://badge.fury.io/js/js-encoding-utils)
 [![CircleCI](https://circleci.com/gh/junkurihara/jseu.svg?style=svg)](https://circleci.com/gh/junkurihara/jseu)
-[![Dependencies](https://david-dm.org/junkurihara/jseu.svg)](https://david-dm.org/junkurihara/jseu)
 [![codecov](https://codecov.io/gh/junkurihara/jseu/branch/develop/graph/badge.svg)](https://codecov.io/gh/junkurihara/jseu)
 [![Maintainability](https://api.codeclimate.com/v1/badges/771abd93ae5d986f1e0a/maintainability)](https://codeclimate.com/github/junkurihara/jseu/maintainability)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -18,47 +17,47 @@ This library is being developed to handle cryptographic data objects, e.g., PEM-
 At your project directory, do either one of the following.
 
 - From npm/yarn:
-  
+
   ```shell
   $ npm install --save js-encoding-utils // npm
   $ yarn add js-encoding-utils // yarn
   ```
-  
+
 - From GitHub:
   ```shell
   $ git clone https://github.com/junkurihara/jseu.git
   ```
-  
+
 Then you should import the package as follows.
 ```javascript
 import jseu from 'js-encoding-utils'; // for npm
 import jseu from 'jseu/dist/index.js'; // for github
 ```
-  
+
 # Usage
 ## Base64 <-> Binary
 ```javascript
-// msg is an ArrayBuffer or Typed Array 
+// msg is an ArrayBuffer or Typed Array
 const encoded = jseu.encoder.encodeBase64(msg);
 // now you get Base64 string
 
 const decoded = jseu.encoder.decodeBase64(encoded);
-// now you get the original message in Uint8Array 
+// now you get the original message in Uint8Array
 ```
 
 ## Base64Url <-> Binary
 ```javascript
-// msg is an ArrayBuffer or Typed Array 
+// msg is an ArrayBuffer or Typed Array
 const encoded = jseu.encoder.encodeBase64Url(msg);
 // now you get Base64Url string
 
 const decoded = jseu.encoder.decodeBase64Url(encoded);
-// now you get the original message in Uint8Array 
+// now you get the original message in Uint8Array
 ```
 
 ## HexString <-> Binary
 ```javascript
-// msg is an ArrayBuffer or Typed Array 
+// msg is an ArrayBuffer or Typed Array
 const encoded = jseu.encoder.arrayBufferToHexString(msg);
 // now you get the hex-stringified message string
 

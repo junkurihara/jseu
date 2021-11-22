@@ -27,7 +27,7 @@ jobs:
     steps:
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
-      
+
       - checkout
 
       - run:
@@ -74,7 +74,7 @@ jobs:
         at: ~/repo
     - run:
         name: Authenticate with registry
-        command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+        command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/repo/.npmrc
     - run:
         name: Build production module
         command: yarn build

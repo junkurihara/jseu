@@ -2,28 +2,17 @@
  * prepare.ts
  */
 
-const base = require('../webpack.baseconfig');
-
-
-export const getTestEnv = () => {
-  let envName;
-  let message;
-  let library;
-  console.log(process.env.TEST_ENV);
-
-  if (process.env.TEST_ENV === 'window'){
-    if(typeof window !== 'undefined' && typeof (<any>window)[base.libName] !== 'undefined'){
-      envName = 'Window';
-      library = (<any>window)[base.libName];
-      message = '**This is a test with a library imported from window.**';
-    }
-    else throw new Error('The library is not loaded in window object.');
-  }
-  else {
-    envName = 'Source';
-    library = require('../src/index');
-    message = '**This is a test with source codes in src.**';
+ export const getTestEnv = async () => {
+  let expect;
+  if(typeof window === 'undefined'){
+    console.log('running on node.js');
+    const testEnv = await import('chai');
+    expect = testEnv.expect;
+  } else {
+    console.log('running on browser');
+    const testEnv = await import('@open-wc/testing');
+    expect = testEnv.expect;
   }
 
-  return {library, envName, message};
+  return {expect};
 };

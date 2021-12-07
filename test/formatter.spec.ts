@@ -1,9 +1,8 @@
 import {getTestEnv} from './prepare';
-const env = getTestEnv();
-const jseu = env.library;
-const envName = env.envName;
+import * as jseu from '../src/index';
 
-describe(`${envName}: Formatter Test`, () => {
+let expect: any;
+describe('Formatter Test', () => {
   const certPEM =
     '-----BEGIN CERTIFICATE-----\n' +
     'MIIBxjCCAWwCCQCEZlhfc33wtzAKBggqhkjOPQQDAjBrMQswCQYDVQQGEwJKUDEO\n' +
@@ -17,11 +16,15 @@ describe(`${envName}: Formatter Test`, () => {
     'A0gAMEUCIQDG0lRQgVAYaXVkkIYQ8YC1A/NzvtlzlP2Kk07Ox6GCVwIgNS5BnBHj\n' +
     'UR3om5rYSWmj7rgz0uJxoaZkkNH4xM2Zfss=\n' +
     '-----END CERTIFICATE-----';
+  before(async () => {
+    const env = await getTestEnv();
+    expect = env.expect;
+  });
 
   it('PEM <-> DER Formatter Test', async () => {
     const binCert = jseu.formatter.pemToBin(certPEM);
-    const pemCert = jseu.formatter.binToPem(binCert, 'certificate');
-    expect(pemCert === certPEM).toBeTruthy();
+    const pemCert = jseu.formatter.binToPem(<Uint8Array>binCert, 'certificate');
+    expect(pemCert === certPEM).to.be.true;
   });
 
 });

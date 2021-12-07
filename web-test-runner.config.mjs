@@ -38,4 +38,18 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
   // ],
 
   // See documentation for all available options
+
+  coverage: true,
+  coverageConfig: {
+    report: true,
+    reportDir: 'coverage',
+    include: ['**/src/*.*'],
+    exclude: ['**/test/*.*', 'node_modules/**/*.*'],
+    threshold: {
+      statements: 80,
+      branches: 60,
+      functions: 60,
+      lines: 80,
+    },
+  },
 });

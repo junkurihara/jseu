@@ -1,6 +1,6 @@
 {
   "name": "js-encoding-utils",
-  "version": "0.6.6",
+  "version": "0.7.0",
   "description": "Miscellaneous Encoding Utilities for Crypto-related Objects in JavaScript",
   "main": "dist/src/index.js",
   "module": "dist/src/index.js",

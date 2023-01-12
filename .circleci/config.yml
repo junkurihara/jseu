@@ -4,7 +4,7 @@
 # https://circleci.com/blog/publishing-npm-packages-using-circleci-2-0/
 version: 2.1
 defaults: &defaults
-  working_directory: ~/repo
+  working_directory: ~/repo/{{ORG_NAME}}/{{REPO_NAME}}
   docker:
     # specify the version you desire here
     - image: cimg/node:lts-browsers

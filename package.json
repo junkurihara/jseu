@@ -38,7 +38,7 @@
     "es6"
   ],
   "devDependencies": {
-    "@custom-elements-manifest/analyzer": "0.8.1",
+    "@custom-elements-manifest/analyzer": "0.8.2",
     "@open-wc/testing": "next",
     "@types/chai": "4.3.5",
     "@types/mocha": "10.0.1",

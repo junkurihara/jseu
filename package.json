@@ -45,7 +45,7 @@
     "@typescript-eslint/eslint-plugin": "7.17.0",
     "@typescript-eslint/parser": "7.17.0",
     "@web/test-runner": "next",
-    "chai": "4.4.1",
+    "chai": "4.5.0",
     "eslint": "9.7.0",
     "mocha": "10.7.0",
     "nyc": "17.0.0",

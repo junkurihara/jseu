@@ -10,7 +10,7 @@ import TypedArray = NodeJS.TypedArray;
  * @param data
  * @return {*}
  */
-export const encodeBase64 = (data: string|ArrayBuffer|TypedArray): string => {
+export const encodeBase64 = (data: string|ArrayBufferLike|TypedArray): string => {
   let str = '';
   if (typeof data === 'string') str = data;
   else str = arrayBufferToString(data);
@@ -36,13 +36,13 @@ export const decodeBase64 = (str: string): Uint8Array|string => {
  * @param data
  * @return {Uint8Array}
  */
-const sanitizeTypedArrayAndArrayBuffer = (data: ArrayBuffer|TypedArray): Uint8Array => {
+const sanitizeTypedArrayAndArrayBuffer = (data: ArrayBufferLike|TypedArray): Uint8Array => {
   if(data instanceof Uint8Array) return data;
 
   if (ArrayBuffer.isView(data) && typeof data.buffer !== 'undefined') { // TypedArray except Uint8Array
     return new Uint8Array(data.buffer);
   }
-  else return new Uint8Array(data); // ArrayBuffer
+  else return new Uint8Array(data as ArrayBuffer); // ArrayBuffer
 };
 
 
@@ -73,7 +73,7 @@ const getAsciiIfAscii = (data: Uint8Array): Uint8Array|string => {
  * @param data
  * @return {string}
  */
-export const encodeBase64Url = (data: ArrayBuffer|Uint8Array): string => encodeBase64(data).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+export const encodeBase64Url = (data: ArrayBufferLike|Uint8Array): string => encodeBase64(data).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 
 /**
  * Decode Base64Url string to Uint8Array
@@ -92,7 +92,7 @@ export const decodeBase64Url = (str: string) => {
  * @param data
  * @return {string}
  */
-export const arrayBufferToHexString = (data: ArrayBuffer|TypedArray): string => {
+export const arrayBufferToHexString = (data: ArrayBufferLike|TypedArray): string => {
   const arr = sanitizeTypedArrayAndArrayBuffer(data);
 
   let hexStr = '';
@@ -121,7 +121,7 @@ export const hexStringToArrayBuffer = (str:string): Uint8Array => {
  * @param data
  * @return {string}
  */
-export const arrayBufferToString = (data: ArrayBuffer|TypedArray): string => {
+export const arrayBufferToString = (data: ArrayBufferLike|TypedArray): string => {
   const bytes = sanitizeTypedArrayAndArrayBuffer(data);
   const arr: number[] = new Array(bytes.length);
   bytes.forEach( (x, i) => { arr[i] = x; });

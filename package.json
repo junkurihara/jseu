@@ -46,7 +46,7 @@
     "@typescript-eslint/parser": "8.18.0",
     "@web/test-runner": "next",
     "chai": "4.5.0",
-    "eslint": "9.16.0",
+    "eslint": "9.17.0",
     "mocha": "11.0.1",
     "nyc": "17.1.0",
     "ts-loader": "9.5.1",

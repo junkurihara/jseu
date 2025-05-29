@@ -22,7 +22,13 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
   },
 
   /** Browsers to run tests on */
-  browsers: [puppeteerLauncher()],
+  browsers: [
+    puppeteerLauncher({
+      launchOptions: {
+        args: ["--no-sandbox"],
+      },
+    }),
+  ],
 
   // See documentation for all available options
 

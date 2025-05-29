@@ -23,7 +23,7 @@ describe('Formatter Test', () => {
 
   it('PEM <-> DER Formatter Test', async () => {
     const binCert = jseu.formatter.pemToBin(certPEM);
-    const pemCert = jseu.formatter.binToPem(<Uint8Array>binCert, 'certificate');
+    const pemCert = jseu.formatter.binToPem(binCert as Uint8Array, 'certificate');
     expect(pemCert === certPEM).to.be.true;
   });
 

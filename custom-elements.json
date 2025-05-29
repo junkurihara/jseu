@@ -24,7 +24,7 @@
             {
               "name": "data",
               "type": {
-                "text": "string|ArrayBuffer|TypedArray"
+                "text": "string|ArrayBufferLike|TypedArray"
               }
             }
           ],
@@ -60,7 +60,7 @@
             {
               "name": "data",
               "type": {
-                "text": "ArrayBuffer|Uint8Array"
+                "text": "ArrayBufferLike|Uint8Array"
               }
             }
           ],
@@ -96,7 +96,7 @@
             {
               "name": "data",
               "type": {
-                "text": "ArrayBuffer|TypedArray"
+                "text": "ArrayBufferLike|TypedArray"
               }
             }
           ],
@@ -132,7 +132,7 @@
             {
               "name": "data",
               "type": {
-                "text": "ArrayBuffer|TypedArray"
+                "text": "ArrayBufferLike|TypedArray"
               }
             }
           ],

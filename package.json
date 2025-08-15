@@ -42,7 +42,7 @@
     "@open-wc/testing": "next",
     "@types/chai": "5.2.2",
     "@types/mocha": "10.0.10",
-    "@types/node": "22.17.1",
+    "@types/node": "22.17.2",
     "@typescript-eslint/eslint-plugin": "8.39.1",
     "@typescript-eslint/parser": "8.39.1",
     "@web/test-runner": "next",

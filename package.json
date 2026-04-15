@@ -82,6 +82,9 @@
   "pnpm": {
     "overrides": {
       "@types/chai": "^5.2.2"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

@@ -37,7 +37,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: latest
+          version: 10.33.0
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -89,7 +89,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v5
         with:
-          version: latest
+          version: 10.33.0
       - run: pnpm install
       - run: pnpm build
       - run: npm publish

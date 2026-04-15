@@ -1,6 +1,7 @@
 {
+  "extends": "./tsconfig.test.json",
   "compilerOptions": {
-    "module": "esnext"
-  },
-  "extends": "./tsconfig.json"
+    "module": "esnext",
+    "moduleResolution": "bundler"
+  }
 }

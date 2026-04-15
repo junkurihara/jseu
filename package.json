@@ -13,8 +13,8 @@
     "release:finish": "git flow release finish v$npm_package_version",
     "release:push": "git push --all && git push origin v$npm_package_version",
     "analyze": "cem analyze --litelement",
-    "build": "rm -rf dist && tsc && pnpm webpack:prod && npm run analyze -- --exclude dist",
-    "test": "nyc mocha \"test/**/*.ts\"",
+    "build": "rm -rf dist && tsc -p ./tsconfig.json && pnpm webpack:prod && npm run analyze -- --exclude dist",
+    "test": "rm -rf .nyc_output && tsc -p ./tsconfig.test.json && nyc mocha \"dist/test/**/*.spec.js\"",
     "test:web": "tsc -p ./tsconfig.wtr.json && wtr --coverage",
     "webpack": "webpack --mode development --config webpack.config.js",
     "webpack:prod": "webpack --mode production --config webpack.config.js",
@@ -42,7 +42,7 @@
     "@open-wc/testing": "next",
     "@types/chai": "5.2.3",
     "@types/mocha": "10.0.10",
-    "@types/node": "24.12.2",
+    "@types/node": "25.6.0",
     "@typescript-eslint/eslint-plugin": "8.58.2",
     "@typescript-eslint/parser": "8.58.2",
     "@web/test-runner": "next",
@@ -54,33 +54,29 @@
     "nyc": "18.0.0",
     "ts-loader": "9.5.7",
     "ts-node": "10.9.2",
-    "typescript": "5.9.3",
+    "typescript": "6.0.2",
     "webpack": "5.106.1",
     "webpack-cli": "7.0.2"
   },
   "nyc": {
+    "all": true,
     "include": [
-      "src/**/*.ts"
+      "dist/src/**/*.js"
     ],
     "exclude": [
-      "test/**/*.*"
+      "dist/test/**/*.js"
     ],
     "extension": [
-      ".ts"
-    ],
-    "require": [
-      "ts-node/register"
+      ".js"
     ],
     "reporter": [
       "text",
       "lcov",
       "html"
     ],
+    "exclude-after-remap": false,
     "sourceMap": true,
     "report-dir": "coverage/nyc"
-  },
-  "ts-node": {
-    "esm": true
   },
   "customElements": "custom-elements.json",
   "pnpm": {

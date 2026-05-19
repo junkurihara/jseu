@@ -55,7 +55,9 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Install Chrome for Puppeteer
-        run: pnpm dlx puppeteer browsers install chrome
+        run: |
+          PUPPETEER_CLI=$(node -e "const path = require('node:path'); const entry = require.resolve('puppeteer', { paths: [require.resolve('@web/test-runner-puppeteer')] }); process.stdout.write(path.join(path.dirname(entry), 'node', 'cli.js'));")
+          node "$PUPPETEER_CLI" browsers install chrome
 
       - name: Test with Node.js
         run: pnpm test

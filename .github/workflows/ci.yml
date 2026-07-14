@@ -37,7 +37,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11.11.0
+          version: 11.13.0
       - name: Get pnpm store directory
         id: pnpm-cache
         run: echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
@@ -105,7 +105,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11.11.0
+          version: 11.13.0
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm build
       - run: npm publish

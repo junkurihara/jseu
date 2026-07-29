@@ -68,9 +68,9 @@ jobs:
             const wtrChrome = fs.realpathSync(path.join(wtrPuppeteer, "..", "..", "@web", "test-runner-chrome"));
             const puppeteerCore = fs.realpathSync(path.join(wtrChrome, "..", "..", "puppeteer-core"));
             const revisionFiles = [
-              // puppeteer-core >= 25
+              // Newer puppeteer-core layout
               "lib/puppeteer/revisions.js",
-              // puppeteer-core < 25
+              // Legacy puppeteer-core layout
               "lib/cjs/puppeteer/revisions.js",
             ];
             const revisionsPath = revisionFiles

@@ -54,29 +54,28 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Install Chrome for Puppeteer
-        # Resolve the puppeteer-core actually used by @web/test-runner-chrome and
-        # install the exact Chrome build it expects. Pinning to that version avoids
-        # drift between the puppeteer used to install Chrome and the puppeteer-core
-        # used to launch it when `pnpm install --no-frozen-lockfile` pulls newer
-        # transitive versions on CI.
+        # Resolve the puppeteer-core used by the puppeteer instance bundled with
+        # @web/test-runner-puppeteer and install the exact Chrome build it expects.
+        # Pinning to that version avoids drift when `pnpm install --no-frozen-lockfile`
+        # pulls a newer @web/test-runner-chrome with a different direct
+        # puppeteer-core dependency than the puppeteer launcher actually uses.
         run: |
           set -euo pipefail
           CHROME_VERSION=$(node -e '
             const path = require("node:path");
             const wtrPuppeteerEntry = require.resolve("@web/test-runner-puppeteer");
-            const wtrChromeEntry = require.resolve("@web/test-runner-chrome", {
+            const puppeteerEntry = require.resolve("puppeteer", {
               paths: [path.dirname(wtrPuppeteerEntry)],
             });
             const revisionFiles = [
+              "puppeteer-core/lib/cjs/puppeteer/revisions.js",
               // Newer puppeteer-core layout
               "puppeteer-core/lib/puppeteer/revisions.js",
-              // Legacy puppeteer-core layout
-              "puppeteer-core/lib/cjs/puppeteer/revisions.js",
             ];
             const revisionsPath = revisionFiles
               .map((specifier) => {
                 try {
-                  return require.resolve(specifier, { paths: [path.dirname(wtrChromeEntry)] });
+                  return require.resolve(specifier, { paths: [path.dirname(puppeteerEntry)] });
                 } catch {
                   return null;
                 }

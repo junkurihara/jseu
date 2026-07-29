@@ -76,7 +76,7 @@ jobs:
             const revisionsPath = revisionFiles
               .map((relativePath) => path.join(puppeteerCore, relativePath))
               .find((candidatePath) => fs.existsSync(candidatePath));
-            if (!revisionsPath) throw new Error("Could not find puppeteer revisions.js");
+            if (!revisionsPath) throw new Error(`Could not find puppeteer revisions.js in: ${revisionFiles.join(", ")}`);
             const { PUPPETEER_REVISIONS } = require(revisionsPath);
             process.stdout.write(PUPPETEER_REVISIONS.chrome);
           ')

@@ -85,7 +85,7 @@ jobs:
             if (!revisionsPath) throw new Error(`Could not find puppeteer revisions.js in: ${revisionFiles.join(", ")}`);
             const { PUPPETEER_REVISIONS } = require(revisionsPath);
             const chromeVersion = PUPPETEER_REVISIONS.chrome ?? PUPPETEER_REVISIONS.chromium;
-            if (!chromeVersion) throw new Error(`Could not resolve Chrome revision from ${revisionsPath}`);
+            if (!chromeVersion) throw new Error(`Could not resolve Chrome revision: PUPPETEER_REVISIONS object missing both chrome and chromium properties in ${revisionsPath}`);
             process.stdout.write(chromeVersion);
           ')
           echo "Installing Chrome ${CHROME_VERSION} into ${HOME}/.cache/puppeteer"

@@ -67,21 +67,23 @@ jobs:
             const puppeteerEntry = require.resolve("puppeteer", {
               paths: [path.dirname(wtrPuppeteerEntry)],
             });
+            const puppeteerDir = path.dirname(puppeteerEntry);
             const revisionFiles = [
+              // Puppeteer 24.x resolves this CommonJS path.
               "puppeteer-core/lib/cjs/puppeteer/revisions.js",
-              // Newer puppeteer-core layout
+              // Newer puppeteer-core releases may expose this path instead.
               "puppeteer-core/lib/puppeteer/revisions.js",
             ];
             const revisionsPath = revisionFiles
               .map((specifier) => {
                 try {
-                  return require.resolve(specifier, { paths: [path.dirname(puppeteerEntry)] });
+                  return require.resolve(specifier, { paths: [puppeteerDir] });
                 } catch {
                   return null;
                 }
               })
               .find(Boolean);
-            if (!revisionsPath) throw new Error(`Could not find puppeteer revisions.js in: ${revisionFiles.join(", ")}`);
+            if (!revisionsPath) throw new Error(`Could not find puppeteer revisions.js from ${puppeteerDir}; tried: ${revisionFiles.join(", ")}`);
             const { PUPPETEER_REVISIONS } = require(revisionsPath);
             // Older puppeteer-core versions use `chromium`; newer versions use `chrome`.
             const chromeVersion = PUPPETEER_REVISIONS.chrome ?? PUPPETEER_REVISIONS.chromium;

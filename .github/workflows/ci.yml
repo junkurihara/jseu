@@ -84,6 +84,7 @@ jobs:
               .find(Boolean);
             if (!revisionsPath) throw new Error(`Could not find puppeteer revisions.js in: ${revisionFiles.join(", ")}`);
             const { PUPPETEER_REVISIONS } = require(revisionsPath);
+            // Older puppeteer-core versions use `chromium`; newer versions use `chrome`.
             const chromeVersion = PUPPETEER_REVISIONS.chrome ?? PUPPETEER_REVISIONS.chromium;
             if (!chromeVersion) throw new Error(`Could not resolve Chrome revision: PUPPETEER_REVISIONS object missing both chrome and chromium properties in ${revisionsPath}`);
             process.stdout.write(chromeVersion);

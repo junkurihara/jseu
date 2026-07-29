@@ -54,21 +54,41 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Install Chrome for Puppeteer
-        # Resolve the puppeteer-core actually used by @web/test-runner-chrome and
-        # install the exact Chrome build it expects. Pinning to that version avoids
-        # drift between the puppeteer used to install Chrome and the puppeteer-core
-        # used to launch it when `pnpm install --no-frozen-lockfile` pulls newer
-        # transitive versions on CI.
+        # Resolve the puppeteer-core used by the puppeteer instance bundled with
+        # @web/test-runner-puppeteer and install the exact Chrome build it expects.
+        # Pinning to that version avoids drift when `pnpm install --no-frozen-lockfile`
+        # pulls a newer @web/test-runner-chrome with a different direct
+        # puppeteer-core dependency than the puppeteer launcher actually uses.
         run: |
           set -euo pipefail
           CHROME_VERSION=$(node -e '
-            const fs = require("node:fs");
             const path = require("node:path");
-            const wtrPuppeteer = fs.realpathSync(path.join(process.cwd(), "node_modules", "@web", "test-runner-puppeteer"));
-            const wtrChrome = fs.realpathSync(path.join(wtrPuppeteer, "..", "..", "@web", "test-runner-chrome"));
-            const puppeteerCore = fs.realpathSync(path.join(wtrChrome, "..", "..", "puppeteer-core"));
-            const { PUPPETEER_REVISIONS } = require(path.join(puppeteerCore, "lib/cjs/puppeteer/revisions.js"));
-            process.stdout.write(PUPPETEER_REVISIONS.chrome);
+            const wtrPuppeteerEntry = require.resolve("@web/test-runner-puppeteer");
+            const puppeteerEntry = require.resolve("puppeteer", {
+              paths: [path.dirname(wtrPuppeteerEntry)],
+            });
+            const puppeteerDir = path.dirname(puppeteerEntry);
+            const revisionFiles = [
+              // Puppeteer 24.x resolves this CommonJS path.
+              "puppeteer-core/lib/cjs/puppeteer/revisions.js",
+              // Newer puppeteer-core releases may expose this path instead.
+              "puppeteer-core/lib/puppeteer/revisions.js",
+            ];
+            const revisionsPath = revisionFiles
+              .map((specifier) => {
+                try {
+                  return require.resolve(specifier, { paths: [puppeteerDir] });
+                } catch {
+                  return null;
+                }
+              })
+              .find(Boolean);
+            if (!revisionsPath) throw new Error(`Could not find puppeteer revisions.js from ${puppeteerDir}; tried: ${revisionFiles.join(", ")}`);
+            const { PUPPETEER_REVISIONS } = require(revisionsPath);
+            // Older puppeteer-core versions use `chromium`; newer versions use `chrome`.
+            const chromeVersion = PUPPETEER_REVISIONS.chrome || PUPPETEER_REVISIONS.chromium;
+            if (!chromeVersion) throw new Error(`Could not resolve Chrome revision: PUPPETEER_REVISIONS object missing both chrome and chromium properties in ${revisionsPath}`);
+            process.stdout.write(chromeVersion);
           ')
           echo "Installing Chrome ${CHROME_VERSION} into ${HOME}/.cache/puppeteer"
           pnpm dlx @puppeteer/browsers install "chrome@${CHROME_VERSION}" --path "${HOME}/.cache/puppeteer"

@@ -62,23 +62,31 @@ jobs:
         run: |
           set -euo pipefail
           CHROME_VERSION=$(node -e '
-            const fs = require("node:fs");
             const path = require("node:path");
-            const wtrPuppeteer = fs.realpathSync(path.join(process.cwd(), "node_modules", "@web", "test-runner-puppeteer"));
-            const wtrChrome = fs.realpathSync(path.join(wtrPuppeteer, "..", "..", "@web", "test-runner-chrome"));
-            const puppeteerCore = fs.realpathSync(path.join(wtrChrome, "..", "..", "puppeteer-core"));
+            const wtrPuppeteerEntry = require.resolve("@web/test-runner-puppeteer");
+            const wtrChromeEntry = require.resolve("@web/test-runner-chrome", {
+              paths: [path.dirname(wtrPuppeteerEntry)],
+            });
             const revisionFiles = [
               // Newer puppeteer-core layout
-              "lib/puppeteer/revisions.js",
+              "puppeteer-core/lib/puppeteer/revisions.js",
               // Legacy puppeteer-core layout
-              "lib/cjs/puppeteer/revisions.js",
+              "puppeteer-core/lib/cjs/puppeteer/revisions.js",
             ];
             const revisionsPath = revisionFiles
-              .map((relativePath) => path.join(puppeteerCore, relativePath))
-              .find((candidatePath) => fs.existsSync(candidatePath));
+              .map((specifier) => {
+                try {
+                  return require.resolve(specifier, { paths: [path.dirname(wtrChromeEntry)] });
+                } catch {
+                  return null;
+                }
+              })
+              .find(Boolean);
             if (!revisionsPath) throw new Error(`Could not find puppeteer revisions.js in: ${revisionFiles.join(", ")}`);
             const { PUPPETEER_REVISIONS } = require(revisionsPath);
-            process.stdout.write(PUPPETEER_REVISIONS.chrome);
+            const chromeVersion = PUPPETEER_REVISIONS.chrome ?? PUPPETEER_REVISIONS.chromium;
+            if (!chromeVersion) throw new Error(`Could not resolve Chrome revision from ${revisionsPath}`);
+            process.stdout.write(chromeVersion);
           ')
           echo "Installing Chrome ${CHROME_VERSION} into ${HOME}/.cache/puppeteer"
           pnpm dlx @puppeteer/browsers install "chrome@${CHROME_VERSION}" --path "${HOME}/.cache/puppeteer"

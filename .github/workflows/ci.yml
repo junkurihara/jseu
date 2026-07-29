@@ -67,7 +67,15 @@ jobs:
             const wtrPuppeteer = fs.realpathSync(path.join(process.cwd(), "node_modules", "@web", "test-runner-puppeteer"));
             const wtrChrome = fs.realpathSync(path.join(wtrPuppeteer, "..", "..", "@web", "test-runner-chrome"));
             const puppeteerCore = fs.realpathSync(path.join(wtrChrome, "..", "..", "puppeteer-core"));
-            const { PUPPETEER_REVISIONS } = require(path.join(puppeteerCore, "lib/cjs/puppeteer/revisions.js"));
+            const revisionFiles = [
+              "lib/puppeteer/revisions.js",
+              "lib/cjs/puppeteer/revisions.js",
+            ];
+            const revisionsPath = revisionFiles
+              .map((relativePath) => path.join(puppeteerCore, relativePath))
+              .find((candidatePath) => fs.existsSync(candidatePath));
+            if (!revisionsPath) throw new Error("Could not find puppeteer revisions.js");
+            const { PUPPETEER_REVISIONS } = require(revisionsPath);
             process.stdout.write(PUPPETEER_REVISIONS.chrome);
           ')
           echo "Installing Chrome ${CHROME_VERSION} into ${HOME}/.cache/puppeteer"

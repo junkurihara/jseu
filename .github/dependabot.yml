@@ -1,0 +1,41 @@
+# Dependabot version updates (migrated from renovate.json).
+# Reference: https://docs.github.com/code-security/dependabot/working-with-dependabot/dependabot-options-reference
+# Pull requests are reviewed and merged manually.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "21:00"
+      timezone: "Asia/Tokyo"
+    # devDependencies are pinned to exact versions; keep them pinned when updating.
+    versioning-strategy: "increase"
+    open-pull-requests-limit: 10
+    assignees:
+      - "junkurihara"
+    labels:
+      - "update-dependencies"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    groups:
+      # Packages released together from the typescript-eslint monorepo.
+      typescript-eslint:
+        patterns:
+          - "@typescript-eslint/*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "21:00"
+      timezone: "Asia/Tokyo"
+    open-pull-requests-limit: 10
+    assignees:
+      - "junkurihara"
+    labels:
+      - "update-dependencies"
+    commit-message:
+      prefix: "chore"
+      include: "scope"

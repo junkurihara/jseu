@@ -2,3 +2,6 @@ allowBuilds:
   esbuild: true
   rs-module-lexer: true
   puppeteer: false
+  # pnpm is a devDependency only so that Dependabot tracks its version; CI
+  # installs pnpm via pnpm/action-setup, so its install script is not needed.
+  pnpm: false

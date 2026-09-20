@@ -24,6 +24,5 @@ web-test-runner.config.mjs
 .circleci/
 coverage/
 .nyc_output
-renovate.json
 *.map
 **/test/
